@@ -22,8 +22,9 @@ insert_at_any_pos(Node* &head, int pos, int val){
     }
 
     new_node->next = temp->next;
-    temp->next = new_node;
     
+    temp->next = new_node;
+
 };
 
 void print_linked_list(Node* head){
