@@ -15,15 +15,16 @@ class Node{
 
 };
 
-void inorder(Node* root){
+void postorder(Node* root){
 
     if(root == NULL) return;
 
-    inorder(root->left);     // left subtree
-
+    postorder(root->left);     // left subtree
+    
+    postorder(root->right);    // right subtree
+    
     cout << root->val << " "; // main node
 
-    inorder(root->right);    // right subtree
 }
 
 int main(){
@@ -42,7 +43,7 @@ int main(){
     b->left = d;
     b->right = e;
 
-    inorder(root);
+    postorder(root);
     // The tree structure is now:
     return 0;
 }
