@@ -1,12 +1,11 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
-
 class Node
 {
-public:
-    int val;
-    Node *left;
-    Node *right;
+    public:
+        int val;
+        Node* left;
+        Node* right;
     Node(int val)
     {
         this->val = val;
@@ -15,74 +14,97 @@ public:
     }
 };
 
-Node *input_tree()
+Node* input_tree()
 {
     int val;
     cin >> val;
-    Node *root;
+    
+    Node * root;
+    if(val == -1) root = NULL;
+    else root = new Node(val);
 
-    if (val == -1)
-        root = NULL;
-    else
-        root = new Node(val);
+    queue<Node*> q;
+    if(root) q.push(root);
 
-    queue<Node *> q;
-
-    if (root)
-        q.push(root);
-
-    while (!q.empty())
+    while(!q.empty())
     {
-        Node *p = q.front();
+        Node * p = q.front();
         q.pop();
-
-        int l, r;
+        
+        int l,r;
         cin >> l >> r;
-        Node *myLeft, *myRight;
-
-        if (l == -1)
-            myLeft = NULL;
+        Node * myleft;
+        Node * myright;
+        
+        if(l == -1) 
+            myleft = NULL;
+        else 
+            myleft = new Node(l);
+        
+        if(r == -1)
+            myright = NULL;
         else
-            myLeft = new Node(l);
+            myright = new Node(r);
 
-        if (r == -1)
-            myRight = NULL;
-        else
-            myRight = new Node(r);
-
-        p->left = myLeft;
-        p->right = myRight;
-
-        if (p->left)
+        p->left = myleft;
+        p->right = myright;
+        
+        if(p->left)
             q.push(p->left);
-
-        if (p->right)
+        if(p->right)
             q.push(p->right);
     }
-    
     return root;
 }
 
-void traverse_left(Node *root)
+void print_left(Node * root)
 {
-    if (root != NULL)
-        cout << root->val << endl;
+    if(!root) return;
     
-
-    while (root != NULL)
+    if(!root->right && !root->left)
     {
-        if (root->left)
-            root = root->left;
-        else
-            root = root->right;
-        
-        cout << root->val << endl;
+        cout << root->val << " ";
+    }
+    else if(root->left)
+    {
+        print_left(root->left);
+        cout << root->val << " ";
+    }
+    else if(root->right)
+    {
+        print_left(root->right);
+        cout << root->val << " ";
     }
 }
 
+void print_right(Node * root)
+{
+    if(!root) return;
+    
+    if(!root->left && !root->right)
+    {
+        cout << root->val << " ";
+    }
+    else if(root->right)
+    {
+        cout << root->val << " ";
+        print_right(root->right);
+    }
+    else if(root->left)
+    {
+        cout << root->val << " ";
+        print_right(root->left);
+    }
+}
 int main()
 {
-    Node *root = input_tree();
-    traverse_left(root);
+    Node * root = input_tree();
+
+    print_left(root->left);
+    
+    cout << root->val << " ";
+    
+    print_right(root->right);
+
     return 0;
 }
